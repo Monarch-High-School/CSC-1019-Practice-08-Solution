@@ -29,8 +29,11 @@ def clean_text(text: str) -> str:
     Return:
         str: The cleaned-up text
     """
-    pass
-    # TODO: Write code that only keeps alphabetic characters and returns the clean string
+    cl_text = ""
+    for ch in text:
+        if ch.isalpha():
+            cl_text += ch
+    return cl_text.lower()
 
 def get_char_count(text: str) -> dict[str,int]:
     """
@@ -42,9 +45,12 @@ def get_char_count(text: str) -> dict[str,int]:
         dict[str,int]: A dictionary where the keys are the characters and the values are the counts
     """
     result: dict[str, int] = {"total": 0} # start off with a total of 0
-    
-    # TODO: Write code that counts the characters in the text
-
+    for ch in text:
+        if ch in result:
+            result[ch] += 1
+        else:
+            result[ch] = 1
+        result["total"] += 1
     return result
 
 def print_summary(summary: dict[str, int]) -> None:
@@ -58,10 +64,15 @@ def print_summary(summary: dict[str, int]) -> None:
         print(f"{character}: {count} ({count/summary["total"]*100:.2f}%)")
 
 def main() -> None:
-    pass
-    # TODO: write code that reads in each of the data files and calls the various
-    # functions to clean and count 
-    
+    data_files: list[str] = ["resources/1.txt", "resources/2.txt", "resources/3.txt", "resources/4.txt", "resources/mystery.txt"]
+
+    for file in data_files:
+        text: str = get_file_contents(file)
+        text = clean_text(text)
+        summary: dict[str, int] = get_char_count(text)
+        print(f"==={file}===")
+        print_summary(summary)
+        print()
 
 if __name__ == "__main__":
     main()
